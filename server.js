@@ -21,13 +21,12 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/:time", function (req, res) {
-  
   let utc = new Date(req.params.time);
-  if(typeof +req.params.time == 'number') {
-    utc = new Date(+req.params.time)
+  if(utc == 'Invalid Date') {
+    utc = new Date(+req.params.time);
   }
-
-  if(!isNaN(utc)) {
+  
+  if(utc.getTime()) {
     res.json({unix: utc.getTime(), utc: utc.toUTCString()});
   } else {
     res.json({ error: 'Invalid Date' });
@@ -37,6 +36,6 @@ app.get("/api/:time", function (req, res) {
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
